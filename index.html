@@ -98,15 +98,11 @@ font-weight: 700;
 letter-spacing: 0.04em;
 color: var(--color-text);
     }
-.site-nav__link {
+.site-nav__tagline {
 font-family: var(--font-heading);
 font-size: 0.8125rem;
 font-weight: 400;
-color: var(--color-text-secondary);
-text-decoration: none;
-    }
-.site-nav__link:hover {
-color: var(--color-text);
+color: var(--color-text-muted);
     }
 .site-nav__right {
 display: flex;
@@ -136,17 +132,6 @@ font-size: 0.875rem;
 background: #2a2a2a;
 color: var(--color-bg);
     }
-.btn--secondary {
-background: transparent;
-color: var(--color-text);
-border: 1px solid var(--color-border);
-padding: 10px 24px;
-font-size: 0.875rem;
-    }
-.btn--secondary:hover {
-border-color: var(--color-text);
-color: var(--color-text);
-    }
 .btn--nav {
 padding: 7px 18px;
 font-size: 0.8125rem;
@@ -170,12 +155,7 @@ margin-bottom: 20px;
 font-size: 1.1875rem;
 line-height: 1.6;
 color: var(--color-text-secondary);
-margin-bottom: 28px;
-    }
-.hero__actions {
-display: flex;
-gap: 12px;
-margin-bottom: 48px;
+margin-bottom: 40px;
     }
 .hero__graph-container {
 background: var(--color-surface);
@@ -425,11 +405,10 @@ line-height: 1.5;
 <nav class="site-nav">
 <div class="site-nav__left">
 <span class="site-nav__logo">TRELLIS</span>
-<a href="#product" class="site-nav__link">Product</a>
-<a href="#architecture" class="site-nav__link">Architecture</a>
+<span class="site-nav__tagline">Enterprise knowledge graph</span>
 </div>
 <div class="site-nav__right">
-<a href="#contact" class="btn btn--primary btn--nav">Contact</a>
+<a href="#" class="btn btn--primary btn--nav" id="contact-nav-btn" data-n="allan" data-d="varpuworks.com">Contact</a>
 </div>
 </nav>
 <!-- =====================================================================
@@ -448,10 +427,6 @@ line-height: 1.5;
         regulatory filing, and a corporate report is a single node, linked to every related
         entity. Then you query across all of it in natural language.
 </p>
-<div class="hero__actions">
-<a href="#contact" class="btn btn--primary">Get in Touch</a>
-<a href="#architecture" class="btn btn--secondary">Read the Architecture</a>
-</div>
 <div class="hero__graph-container">
 <svg class="graph-illustration" viewBox="0 0 410 110">
 <!-- Edges -->
@@ -716,11 +691,16 @@ line-height: 1.5;
 </div>
 </footer>
 <script>
-document.getElementById('contact-btn').addEventListener('click', function(e) {
-e.preventDefault();
-var a = this.getAttribute('data-n');
-var b = this.getAttribute('data-d');
-window.location.href = 'mail' + 'to:' + a + '@' + b;
+function openContact(el) {
+var a = el.getAttribute('data-n');
+var b = el.getAttribute('data-d');
+var addr = a + '@' + b;
+var subject = encodeURIComponent('Interested in Trellis');
+var body = encodeURIComponent('Hi Allan,\n\nI\u2019m interested in Trellis and would like to learn more. Could we find a time to talk?\n\nBest regards');
+window.location.href = 'mail' + 'to:' + addr + '?subject=' + subject + '&body=' + body;
+}
+document.querySelectorAll('[data-n][data-d]').forEach(function(el) {
+el.addEventListener('click', function(e) { e.preventDefault(); openContact(this); });
 });
 </script>
 </body>
