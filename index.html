@@ -207,12 +207,6 @@ fill: var(--color-text-secondary);
 .section {
 padding: 48px 0;
     }
-.section--border-top {
-border-top: 1px solid var(--color-border);
-    }
-.section--rule-top {
-border-top: 2px solid var(--color-text);
-    }
 .section__title {
 font-family: var(--font-heading);
 font-size: 1.375rem;
@@ -387,10 +381,9 @@ line-height: 1.55;
        ========================================================================= */
 .site-footer {
 padding: 24px 32px;
-border-top: 1px solid var(--color-border);
 display: flex;
 justify-content: space-between;
-align-items: center;
+align-items: flex-start;
     }
 .site-footer__brand {
 font-family: var(--font-heading);
@@ -404,9 +397,12 @@ color: var(--color-text-muted);
 margin-left: 8px;
     }
 .site-footer__meta {
-font-family: var(--font-mono);
-font-size: 0.6875rem;
+font-family: var(--font-body);
+font-size: 0.8125rem;
 color: var(--color-text-muted);
+max-width: 480px;
+text-align: right;
+line-height: 1.5;
     }
 /* =========================================================================
        RESPONSIVE
@@ -416,7 +412,6 @@ color: var(--color-text-muted);
 .two-col { flex-direction: column; gap: 32px; }
 .pipeline { flex-direction: column; }
 .pipeline__step:not(:first-child) { border-left: none; border-top: 1px solid var(--color-border-subtle); }
-.tech-grid { grid-template-columns: 1fr; }
 .industry-cards { flex-direction: column; }
 .capability__detail { flex-direction: column; gap: 6px; }
 .site-footer { flex-direction: column; gap: 8px; text-align: center; }
@@ -443,12 +438,15 @@ color: var(--color-text-muted);
 <section class="hero">
 <div class="content-wrap">
 <h1 class="hero__title">
-        The knowledge graph that reads your documents so you can query them
+        Your documents, structured into a single connected graph of every entity, relationship, and fact — queryable in natural language
 </h1>
 <p class="hero__description">
-        Trellis ingests documents from across your enterprise, extracts structured entities
-        and relationships using per-type ontologies, and stores everything in a unified
-        knowledge graph. Then it lets you ask questions that span documents, systems, and time.
+        Trellis reads documents from across your enterprise, classifies each by type, and
+        extracts the entities and relationships that matter — guided by per-type ontologies
+        that define what to look for in each kind of document. Everything flows into a unified
+        knowledge graph: one connected structure where a company mentioned in a contract, a
+        regulatory filing, and a corporate report is a single node, linked to every related
+        entity. Then you query across all of it in natural language.
 </p>
 <div class="hero__actions">
 <a href="#contact" class="btn btn--primary">Get in Touch</a>
@@ -491,7 +489,7 @@ color: var(--color-text-muted);
 <!-- =====================================================================
        PROBLEM / SOLUTION
        ====================================================================== -->
-<section class="section section--rule-top" id="product">
+<section class="section" id="product">
 <div class="content-wrap">
 <div class="two-col">
 <div class="two-col__item">
@@ -524,7 +522,7 @@ color: var(--color-text-muted);
 <!-- =====================================================================
        EXAMPLE QUERIES
        ====================================================================== -->
-<section class="section section--border-top">
+<section class="section">
 <div class="content-wrap">
 <h2 class="section__title">Questions that become answerable</h2>
 <p class="section__subtitle">
@@ -606,7 +604,7 @@ color: var(--color-text-muted);
 <!-- =====================================================================
        HOW IT WORKS (Pipeline)
        ====================================================================== -->
-<section class="section section--border-top" id="architecture">
+<section class="section" id="architecture">
 <div class="content-wrap">
 <h2 class="section__title">How it works</h2>
 <p class="section__subtitle">Five stages from raw document to queryable graph.</p>
@@ -658,7 +656,7 @@ color: var(--color-text-muted);
 <!-- =====================================================================
        TARGET INDUSTRIES
        ====================================================================== -->
-<section class="section section--border-top">
+<section class="section">
 <div class="content-wrap">
 <h2 class="section__title">Built for regulated industries</h2>
 <p class="section__subtitle section__subtitle--wide">
@@ -693,7 +691,7 @@ color: var(--color-text-muted);
 <!-- =====================================================================
        CTA
        ====================================================================== -->
-<section class="section section--rule-top" id="contact">
+<section class="section" id="contact">
 <div class="content-wrap">
 <div class="cta">
 <h2 class="cta__title">Get in touch</h2>
