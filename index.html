@@ -46,7 +46,8 @@
        ========================================================================= */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html {
-font-size: 16px;
+font-size: 19px;
+scroll-padding-top: 60px;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
     }
@@ -236,7 +237,6 @@ color: var(--color-text-muted);
 margin-bottom: 16px;
     }
 .section__subtitle--wide {
-max-width: 620px;
 margin-bottom: 20px;
     }
 /* =========================================================================
@@ -480,12 +480,9 @@ color: var(--color-text-muted);
 <span class="site-nav__logo">TRELLIS</span>
 <a href="#product" class="site-nav__link">Product</a>
 <a href="#architecture" class="site-nav__link">Architecture</a>
-<a href="#documentation" class="site-nav__link">Documentation</a>
-<a href="#company" class="site-nav__link">Company</a>
 </div>
 <div class="site-nav__right">
-<a href="#contact" class="site-nav__link">Contact</a>
-<a href="#demo" class="btn btn--primary btn--nav">Request Demo</a>
+<a href="#contact" class="btn btn--primary btn--nav">Contact</a>
 </div>
 </nav>
 <!-- =====================================================================
@@ -503,7 +500,7 @@ color: var(--color-text-muted);
         knowledge graph. Then it lets you ask questions that span documents, systems, and time.
 </p>
 <div class="hero__actions">
-<a href="#demo" class="btn btn--primary">Request Demo</a>
+<a href="#contact" class="btn btn--primary">Get in Touch</a>
 <a href="#architecture" class="btn btn--secondary">Read the Architecture</a>
 </div>
 <div class="hero__graph-container">
@@ -786,15 +783,15 @@ color: var(--color-text-muted);
 <!-- =====================================================================
        CTA
        ====================================================================== -->
-<section class="section section--rule-top" id="demo">
+<section class="section section--rule-top" id="contact">
 <div class="content-wrap">
 <div class="cta">
-<h2 class="cta__title">See it on your data</h2>
+<h2 class="cta__title">Get in touch</h2>
 <p class="cta__description">
-          We'll build a proof of concept on your documents — public data or your own, with full
-          access controls — and show you the cross-document relationships you've been missing.
+          Interested in seeing Trellis on your data? Reach out to Allan Halme
+          to discuss a proof of concept on your documents.
 </p>
-<a href="#contact" class="btn btn--primary">Request a Demo</a>
+<a href="#" class="btn btn--primary" id="contact-btn" data-n="allan" data-d="varpuworks.com">Contact Allan</a>
 </div>
 </div>
 </section>
@@ -807,8 +804,16 @@ color: var(--color-text-muted);
 <span class="site-footer__byline">by Varpu Works</span>
 </div>
 <div class="site-footer__meta">
-      On-premises · YAML-driven ontologies · Neo4j + PostgreSQL · Claude API
+      On-premises / In-tenant / SaaS · Custom ontologies · Solvency II, DORA, AI Act, NIS2 · Finlex, Edilex, FIN-FSA
 </div>
 </footer>
+<script>
+document.getElementById('contact-btn').addEventListener('click', function(e) {
+e.preventDefault();
+var a = this.getAttribute('data-n');
+var b = this.getAttribute('data-d');
+window.location.href = 'mail' + 'to:' + a + '@' + b;
+});
+</script>
 </body>
 </html>
