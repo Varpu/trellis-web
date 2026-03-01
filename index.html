@@ -157,15 +157,6 @@ font-size: 0.8125rem;
 .hero {
 padding: 64px 0 48px;
     }
-.hero__eyebrow {
-font-family: var(--font-heading);
-font-size: 0.6875rem;
-font-weight: 600;
-text-transform: uppercase;
-letter-spacing: 0.1em;
-color: var(--color-text-muted);
-margin-bottom: 12px;
-    }
 .hero__title {
 font-family: var(--font-heading);
 font-size: 2.75rem;
@@ -173,14 +164,12 @@ font-weight: 700;
 line-height: 1.1;
 letter-spacing: -0.02em;
 color: var(--color-text);
-max-width: 700px;
 margin-bottom: 20px;
     }
 .hero__description {
 font-size: 1.1875rem;
 line-height: 1.6;
 color: var(--color-text-secondary);
-max-width: 620px;
 margin-bottom: 28px;
     }
 .hero__actions {
@@ -349,42 +338,6 @@ line-height: 1.5;
 color: var(--color-text-secondary);
     }
 /* =========================================================================
-       TECH GRID (Technical foundation)
-       ========================================================================= */
-.tech-grid {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 1px;
-background: var(--color-border);
-border-radius: var(--radius-md);
-overflow: hidden;
-    }
-.tech-grid__item {
-background: var(--color-surface);
-padding: 14px 16px;
-    }
-.tech-grid__label {
-font-family: var(--font-heading);
-font-size: 0.625rem;
-font-weight: 600;
-text-transform: uppercase;
-letter-spacing: 0.08em;
-color: var(--color-text-muted);
-margin-bottom: 4px;
-    }
-.tech-grid__value {
-font-family: var(--font-heading);
-font-size: 1rem;
-font-weight: 600;
-color: var(--color-text);
-margin-bottom: 4px;
-    }
-.tech-grid__note {
-font-size: 0.8125rem;
-line-height: 1.45;
-color: var(--color-text-secondary);
-    }
-/* =========================================================================
        INDUSTRY CARDS
        ========================================================================= */
 .industry-cards {
@@ -426,7 +379,6 @@ margin-bottom: 12px;
 .cta__description {
 font-size: 1rem;
 color: var(--color-text-secondary);
-max-width: 500px;
 margin: 0 auto 24px;
 line-height: 1.55;
     }
@@ -490,7 +442,6 @@ color: var(--color-text-muted);
        ====================================================================== -->
 <section class="hero">
 <div class="content-wrap">
-<div class="hero__eyebrow">by Varpu Works</div>
 <h1 class="hero__title">
         The knowledge graph that reads your documents so you can query them
 </h1>
@@ -700,47 +651,6 @@ color: var(--color-text-muted);
             BM25, vector, and graph traversal fire in parallel. Reciprocal Rank Fusion
             merges results. LLM synthesizes a cited answer from combined context.
 </div>
-</div>
-</div>
-</div>
-</section>
-<!-- =====================================================================
-       TECHNICAL FOUNDATION
-       ====================================================================== -->
-<section class="section section--border-top">
-<div class="content-wrap">
-<h2 class="section__title">Technical foundation</h2>
-<p class="section__subtitle">Stable, auditable, on-premises from day one.</p>
-<div class="tech-grid">
-<div class="tech-grid__item">
-<div class="tech-grid__label">Graph Storage</div>
-<div class="tech-grid__value">Neo4j 5.x</div>
-<div class="tech-grid__note">Cypher queries, APOC, native vector + fulltext indexes</div>
-</div>
-<div class="tech-grid__item">
-<div class="tech-grid__label">Relational + Vector</div>
-<div class="tech-grid__value">PostgreSQL 16</div>
-<div class="tech-grid__note">pgvector for embeddings, tsvector for BM25, application state</div>
-</div>
-<div class="tech-grid__item">
-<div class="tech-grid__label">API Layer</div>
-<div class="tech-grid__value">Python / FastAPI</div>
-<div class="tech-grid__note">Async, type-safe, auto-generated OpenAPI spec</div>
-</div>
-<div class="tech-grid__item">
-<div class="tech-grid__label">LLM Extraction</div>
-<div class="tech-grid__value">Claude API</div>
-<div class="tech-grid__note">Ontology-guided extraction, Cypher generation, answer synthesis</div>
-</div>
-<div class="tech-grid__item">
-<div class="tech-grid__label">Access Control</div>
-<div class="tech-grid__value">Corpus + Tier</div>
-<div class="tech-grid__note">Two-dimensional model. No source permission replication.</div>
-</div>
-<div class="tech-grid__item">
-<div class="tech-grid__label">Deployment</div>
-<div class="tech-grid__value">Docker Compose</div>
-<div class="tech-grid__note">Single command. On-premises or customer cloud tenant.</div>
 </div>
 </div>
 </div>
