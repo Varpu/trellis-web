@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trellis — Enterprise Knowledge Graph Platform</title>
+<meta name="description" content="Trellis ingests documents from across your enterprise, extracts structured entities and relationships, and builds a unified knowledge graph you can query in natural language.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================================
+       THEME TOKENS
+       Change these to retheme the entire site.
+       ========================================================================= */
+:root {
+--font-heading: 'Jost', sans-serif;
+--font-body: 'EB Garamond', serif;
+--font-mono: 'JetBrains Mono', monospace;
+--color-bg: #fffff8;
+--color-surface: #f7f3eb;
+--color-surface-alt: #efeadf;
+--color-border: #ddd8cb;
+--color-border-subtle: #e8e4d9;
+--color-text: #111111;
+--color-text-secondary: #4a4540;
+--color-text-muted: #8a857c;
+--color-accent: #a00000;
+--color-accent-hover: #7a0000;
+--color-success: #2d6a2d;
+--color-warning: #b8860b;
+--color-info: #2b5797;
+--color-node-company: #2b5797;
+--color-node-regulation: #2d6a2d;
+--color-node-risk: #b8860b;
+--color-node-report: #8b5e3c;
+--color-node-article: #6b5b8a;
+--color-node-person: #4a7c8a;
+--radius-sm: 4px;
+--radius-md: 6px;
+--width-content: 960px;
+    }
+/* =========================================================================
+       RESET & BASE
+       ========================================================================= */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html {
+font-size: 16px;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+    }
+body {
+font-family: var(--font-body);
+color: var(--color-text);
+background: var(--color-bg);
+line-height: 1.6;
+    }
+a {
+color: var(--color-accent);
+text-decoration: none;
+    }
+a:hover {
+color: var(--color-accent-hover);
+    }
+/* =========================================================================
+       LAYOUT
+       ========================================================================= */
+.content-wrap {
+max-width: var(--width-content);
+margin: 0 auto;
+padding: 0 32px;
+    }
+/* =========================================================================
+       NAVIGATION
+       ========================================================================= */
+.site-nav {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 14px 32px;
+border-bottom: 1px solid var(--color-border);
+position: sticky;
+top: 0;
+background: var(--color-bg);
+z-index: 100;
+    }
+.site-nav__left {
+display: flex;
+align-items: center;
+gap: 24px;
+    }
+.site-nav__logo {
+font-family: var(--font-heading);
+font-size: 1.125rem;
+font-weight: 700;
+letter-spacing: 0.04em;
+color: var(--color-text);
+    }
+.site-nav__link {
+font-family: var(--font-heading);
+font-size: 0.8125rem;
+font-weight: 400;
+color: var(--color-text-secondary);
+text-decoration: none;
+    }
+.site-nav__link:hover {
+color: var(--color-text);
+    }
+.site-nav__right {
+display: flex;
+align-items: center;
+gap: 16px;
+    }
+/* =========================================================================
+       BUTTONS
+       ========================================================================= */
+.btn {
+font-family: var(--font-heading);
+font-weight: 500;
+border: none;
+border-radius: var(--radius-sm);
+cursor: pointer;
+display: inline-block;
+text-decoration: none;
+text-align: center;
+    }
+.btn--primary {
+background: var(--color-text);
+color: var(--color-bg);
+padding: 10px 24px;
+font-size: 0.875rem;
+    }
+.btn--primary:hover {
+background: #2a2a2a;
+color: var(--color-bg);
+    }
+.btn--secondary {
+background: transparent;
+color: var(--color-text);
+border: 1px solid var(--color-border);
+padding: 10px 24px;
+font-size: 0.875rem;
+    }
+.btn--secondary:hover {
+border-color: var(--color-text);
+color: var(--color-text);
+    }
+.btn--nav {
+padding: 7px 18px;
+font-size: 0.8125rem;
+    }
+/* =========================================================================
+       HERO SECTION
+       ========================================================================= */
+.hero {
+padding: 64px 0 48px;
+    }
+.hero__eyebrow {
+font-family: var(--font-heading);
+font-size: 0.6875rem;
+font-weight: 600;
+text-transform: uppercase;
+letter-spacing: 0.1em;
+color: var(--color-text-muted);
+margin-bottom: 12px;
+    }
+.hero__title {
+font-family: var(--font-heading);
+font-size: 2.75rem;
+font-weight: 700;
+line-height: 1.1;
+letter-spacing: -0.02em;
+color: var(--color-text);
+max-width: 700px;
+margin-bottom: 20px;
+    }
+.hero__description {
+font-size: 1.1875rem;
+line-height: 1.6;
+color: var(--color-text-secondary);
+max-width: 620px;
+margin-bottom: 28px;
+    }
+.hero__actions {
+display: flex;
+gap: 12px;
+margin-bottom: 48px;
+    }
+.hero__graph-container {
+background: var(--color-surface);
+border: 1px solid var(--color-border);
+border-radius: var(--radius-md);
+padding: 20px 32px;
+    }
+/* =========================================================================
+       GRAPH ILLUSTRATION (SVG)
+       ========================================================================= */
+.graph-illustration {
+width: 100%;
+height: auto;
+    }
+.graph-illustration__edge {
+stroke: var(--color-border);
+stroke-width: 0.8;
+fill: none;
+    }
+.graph-illustration__label {
+font-family: var(--font-heading);
+font-size: 7px;
+font-weight: 500;
+fill: var(--color-text-secondary);
+    }
+/* =========================================================================
+       SECTION FOUNDATIONS
+       ========================================================================= */
+.section {
+padding: 48px 0;
+    }
+.section--border-top {
+border-top: 1px solid var(--color-border);
+    }
+.section--rule-top {
+border-top: 2px solid var(--color-text);
+    }
+.section__title {
+font-family: var(--font-heading);
+font-size: 1.375rem;
+font-weight: 600;
+color: var(--color-text);
+margin-bottom: 6px;
+    }
+.section__subtitle {
+font-size: 0.9375rem;
+color: var(--color-text-muted);
+margin-bottom: 16px;
+    }
+.section__subtitle--wide {
+max-width: 620px;
+margin-bottom: 20px;
+    }
+/* =========================================================================
+       TWO-COLUMN LAYOUT (Problem / Solution)
+       ========================================================================= */
+.two-col {
+display: flex;
+gap: 48px;
+    }
+.two-col__item {
+flex: 1 1 340px;
+    }
+.two-col__title {
+font-family: var(--font-heading);
+font-size: 1.375rem;
+font-weight: 600;
+color: var(--color-text);
+margin-bottom: 14px;
+    }
+.two-col__text {
+font-size: 1rem;
+line-height: 1.65;
+color: var(--color-text-secondary);
+margin-bottom: 12px;
+    }
+.two-col__text:last-child {
+margin-bottom: 0;
+    }
+/* =========================================================================
+       CAPABILITY ROWS (Example queries)
+       ========================================================================= */
+.capability {
+padding: 16px 0;
+border-bottom: 1px solid var(--color-border-subtle);
+    }
+.capability__query {
+font-family: var(--font-body);
+font-size: 1rem;
+font-style: italic;
+color: var(--color-text);
+line-height: 1.5;
+margin-bottom: 6px;
+    }
+.capability__detail {
+display: flex;
+align-items: baseline;
+gap: 12px;
+    }
+.capability__explanation {
+font-size: 0.875rem;
+color: var(--color-text-secondary);
+line-height: 1.5;
+flex: 1;
+    }
+.capability__tags {
+display: flex;
+gap: 4px;
+flex-shrink: 0;
+    }
+.tag {
+font-family: var(--font-heading);
+font-size: 0.5625rem;
+font-weight: 600;
+letter-spacing: 0.03em;
+padding: 2px 6px;
+border-radius: 2px;
+color: #fff;
+    }
+.tag--company    { background: var(--color-node-company); }
+.tag--regulation { background: var(--color-node-regulation); }
+.tag--risk       { background: var(--color-node-risk); }
+.tag--report     { background: var(--color-node-report); }
+.tag--article    { background: var(--color-node-article); }
+.tag--person     { background: var(--color-node-person); }
+/* =========================================================================
+       PIPELINE STEPS (How it works)
+       ========================================================================= */
+.pipeline {
+display: flex;
+gap: 0;
+    }
+.pipeline__step {
+flex: 1;
+padding: 16px 14px;
+transition: background 0.15s ease;
+    }
+.pipeline__step:not(:first-child) {
+border-left: 1px solid var(--color-border-subtle);
+    }
+.pipeline__step:hover {
+background: var(--color-surface);
+    }
+.pipeline__number {
+font-family: var(--font-heading);
+font-size: 0.6875rem;
+font-weight: 600;
+color: var(--color-accent);
+margin-bottom: 4px;
+    }
+.pipeline__name {
+font-family: var(--font-heading);
+font-size: 0.9375rem;
+font-weight: 600;
+color: var(--color-text);
+margin-bottom: 6px;
+    }
+.pipeline__desc {
+font-size: 0.8125rem;
+line-height: 1.5;
+color: var(--color-text-secondary);
+    }
+/* =========================================================================
+       TECH GRID (Technical foundation)
+       ========================================================================= */
+.tech-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 1px;
+background: var(--color-border);
+border-radius: var(--radius-md);
+overflow: hidden;
+    }
+.tech-grid__item {
+background: var(--color-surface);
+padding: 14px 16px;
+    }
+.tech-grid__label {
+font-family: var(--font-heading);
+font-size: 0.625rem;
+font-weight: 600;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+color: var(--color-text-muted);
+margin-bottom: 4px;
+    }
+.tech-grid__value {
+font-family: var(--font-heading);
+font-size: 1rem;
+font-weight: 600;
+color: var(--color-text);
+margin-bottom: 4px;
+    }
+.tech-grid__note {
+font-size: 0.8125rem;
+line-height: 1.45;
+color: var(--color-text-secondary);
+    }
+/* =========================================================================
+       INDUSTRY CARDS
+       ========================================================================= */
+.industry-cards {
+display: flex;
+gap: 24px;
+    }
+.industry-card {
+flex: 1;
+padding: 16px 18px;
+background: var(--color-surface);
+border: 1px solid var(--color-border-subtle);
+border-radius: var(--radius-md);
+    }
+.industry-card__title {
+font-family: var(--font-heading);
+font-size: 0.9375rem;
+font-weight: 600;
+color: var(--color-text);
+margin-bottom: 8px;
+    }
+.industry-card__examples {
+font-size: 0.875rem;
+line-height: 1.55;
+color: var(--color-text-secondary);
+    }
+/* =========================================================================
+       CTA SECTION
+       ========================================================================= */
+.cta {
+text-align: center;
+    }
+.cta__title {
+font-family: var(--font-heading);
+font-size: 1.75rem;
+font-weight: 600;
+color: var(--color-text);
+margin-bottom: 12px;
+    }
+.cta__description {
+font-size: 1rem;
+color: var(--color-text-secondary);
+max-width: 500px;
+margin: 0 auto 24px;
+line-height: 1.55;
+    }
+/* =========================================================================
+       FOOTER
+       ========================================================================= */
+.site-footer {
+padding: 24px 32px;
+border-top: 1px solid var(--color-border);
+display: flex;
+justify-content: space-between;
+align-items: center;
+    }
+.site-footer__brand {
+font-family: var(--font-heading);
+font-size: 0.8125rem;
+font-weight: 600;
+color: var(--color-text);
+    }
+.site-footer__byline {
+font-size: 0.8125rem;
+color: var(--color-text-muted);
+margin-left: 8px;
+    }
+.site-footer__meta {
+font-family: var(--font-mono);
+font-size: 0.6875rem;
+color: var(--color-text-muted);
+    }
+/* =========================================================================
+       RESPONSIVE
+       ========================================================================= */
+@media (max-width: 768px) {
+.hero__title { font-size: 2rem; }
+.two-col { flex-direction: column; gap: 32px; }
+.pipeline { flex-direction: column; }
+.pipeline__step:not(:first-child) { border-left: none; border-top: 1px solid var(--color-border-subtle); }
+.tech-grid { grid-template-columns: 1fr; }
+.industry-cards { flex-direction: column; }
+.capability__detail { flex-direction: column; gap: 6px; }
+.site-footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+</style>
+</head>
+<body>
+<!-- =====================================================================
+       NAVIGATION
+       ====================================================================== -->
+<nav class="site-nav">
+<div class="site-nav__left">
+<span class="site-nav__logo">TRELLIS</span>
+<a href="#product" class="site-nav__link">Product</a>
+<a href="#architecture" class="site-nav__link">Architecture</a>
+<a href="#documentation" class="site-nav__link">Documentation</a>
+<a href="#company" class="site-nav__link">Company</a>
+</div>
+<div class="site-nav__right">
+<a href="#contact" class="site-nav__link">Contact</a>
+<a href="#demo" class="btn btn--primary btn--nav">Request Demo</a>
+</div>
+</nav>
+<!-- =====================================================================
+       HERO
+       ====================================================================== -->
+<section class="hero">
+<div class="content-wrap">
+<div class="hero__eyebrow">by Varpu Works</div>
+<h1 class="hero__title">
+        The knowledge graph that reads your documents so you can query them
+</h1>
+<p class="hero__description">
+        Trellis ingests documents from across your enterprise, extracts structured entities
+        and relationships using per-type ontologies, and stores everything in a unified
+        knowledge graph. Then it lets you ask questions that span documents, systems, and time.
+</p>
+<div class="hero__actions">
+<a href="#demo" class="btn btn--primary">Request Demo</a>
+<a href="#architecture" class="btn btn--secondary">Read the Architecture</a>
+</div>
+<div class="hero__graph-container">
+<svg class="graph-illustration" viewBox="0 0 410 110">
+<!-- Edges -->
+<line class="graph-illustration__edge" x1="60"  y1="50" x2="160" y2="30" />
+<line class="graph-illustration__edge" x1="60"  y1="50" x2="160" y2="80" />
+<line class="graph-illustration__edge" x1="160" y1="30" x2="260" y2="20" />
+<line class="graph-illustration__edge" x1="160" y1="30" x2="260" y2="55" />
+<line class="graph-illustration__edge" x1="160" y1="80" x2="260" y2="90" />
+<line class="graph-illustration__edge" x1="260" y1="20" x2="260" y2="55" />
+<line class="graph-illustration__edge" x1="160" y1="80" x2="350" y2="40" />
+<line class="graph-illustration__edge" x1="260" y1="90" x2="350" y2="80" />
+<line class="graph-illustration__edge" x1="260" y1="90" x2="260" y2="20" />
+<!-- Nodes -->
+<circle cx="60"  cy="50" r="10" fill="var(--color-node-company)" />
+<circle cx="160" cy="30" r="8"  fill="var(--color-node-report)" />
+<circle cx="160" cy="80" r="8"  fill="var(--color-node-report)" />
+<circle cx="260" cy="20" r="7"  fill="var(--color-node-regulation)" />
+<circle cx="260" cy="55" r="6"  fill="var(--color-node-article)" />
+<circle cx="260" cy="90" r="7"  fill="var(--color-node-risk)" />
+<circle cx="350" cy="40" r="7"  fill="var(--color-node-regulation)" />
+<circle cx="350" cy="80" r="6"  fill="var(--color-node-regulation)" />
+<!-- Labels -->
+<text class="graph-illustration__label" x="60"  y="68"  text-anchor="middle">Company</text>
+<text class="graph-illustration__label" x="160" y="18"  text-anchor="middle">SFCR</text>
+<text class="graph-illustration__label" x="160" y="97"  text-anchor="middle">Annual Report</text>
+<text class="graph-illustration__label" x="260" y="10"  text-anchor="middle">Solvency II</text>
+<text class="graph-illustration__label" x="260" y="70"  text-anchor="middle">Art. 45</text>
+<text class="graph-illustration__label" x="260" y="107" text-anchor="middle">Climate Risk</text>
+<text class="graph-illustration__label" x="350" y="30"  text-anchor="middle">DORA</text>
+<text class="graph-illustration__label" x="350" y="97"  text-anchor="middle">SFDR</text>
+</svg>
+</div>
+</div>
+</section>
+<!-- =====================================================================
+       PROBLEM / SOLUTION
+       ====================================================================== -->
+<section class="section section--rule-top" id="product">
+<div class="content-wrap">
+<div class="two-col">
+<div class="two-col__item">
+<h2 class="two-col__title">The problem with enterprise search</h2>
+<p class="two-col__text">
+            Your organization's knowledge is scattered across SharePoint, Confluence, Google
+            Drive, Jira, Salesforce, and a dozen other systems. Existing search tools — Coveo,
+            Glean, Elastic, Microsoft Search — index this content as undifferentiated text.
+</p>
+<p class="two-col__text">
+            They can find documents <em>containing</em> a term. They cannot answer questions
+<em>about</em> the structured information within and across those documents.
+</p>
+</div>
+<div class="two-col__item">
+<h2 class="two-col__title">What Trellis does differently</h2>
+<p class="two-col__text">
+            Trellis doesn't just index text. It classifies each document by type, applies a
+            domain-specific ontology to extract entities and relationships, resolves
+            duplicates, and builds a unified knowledge graph across all your systems.
+</p>
+<p class="two-col__text">
+            The result: a semantic layer where a company appearing in a procurement notice,
+            a contract, and a corporate report is one node — with edges to every related entity.
+</p>
+</div>
+</div>
+</div>
+</section>
+<!-- =====================================================================
+       EXAMPLE QUERIES
+       ====================================================================== -->
+<section class="section section--border-top">
+<div class="content-wrap">
+<h2 class="section__title">Questions that become answerable</h2>
+<p class="section__subtitle">
+        Each requires cross-document, cross-type, relationship-aware reasoning.
+</p>
+<div class="capability">
+<div class="capability__query">
+          "Which active contracts reference a regulation that has since been amended?"
+</div>
+<div class="capability__detail">
+<div class="capability__explanation">
+            Links clause-level extractions in contracts to regulatory amendment chains in the knowledge graph.
+</div>
+<div class="capability__tags">
+<span class="tag tag--report">Contract</span>
+<span class="tag tag--regulation">Regulation</span>
+</div>
+</div>
+</div>
+<div class="capability">
+<div class="capability__query">
+          "Which suppliers appear across multiple procurement chains with overlapping board members?"
+</div>
+<div class="capability__detail">
+<div class="capability__explanation">
+            Resolves company entities across procurement notices, then traverses board membership relationships.
+</div>
+<div class="capability__tags">
+<span class="tag tag--company">Company</span>
+<span class="tag tag--person">Person</span>
+</div>
+</div>
+</div>
+<div class="capability">
+<div class="capability__query">
+          "What regulatory obligations apply to the risks identified in our latest sustainability report?"
+</div>
+<div class="capability__detail">
+<div class="capability__explanation">
+            Traverses from report risk factors through sector classifications to applicable regulations.
+</div>
+<div class="capability__tags">
+<span class="tag tag--report">Report</span>
+<span class="tag tag--risk">Risk</span>
+<span class="tag tag--regulation">Regulation</span>
+</div>
+</div>
+</div>
+<div class="capability">
+<div class="capability__query">
+          "What is our total procurement exposure to Company X across all business units?"
+</div>
+<div class="capability__detail">
+<div class="capability__explanation">
+            Entity resolution across procurement, contract, and financial documents from multiple systems.
+</div>
+<div class="capability__tags">
+<span class="tag tag--company">Company</span>
+<span class="tag tag--report">Contract</span>
+</div>
+</div>
+</div>
+<div class="capability">
+<div class="capability__query">
+          "Flag contracts where the named subcontractor appears in no other project documentation"
+</div>
+<div class="capability__detail">
+<div class="capability__explanation">
+            Negative pattern matching across the full graph — detecting the absence of expected relationships.
+</div>
+<div class="capability__tags">
+<span class="tag tag--report">Contract</span>
+<span class="tag tag--company">Company</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =====================================================================
+       HOW IT WORKS (Pipeline)
+       ====================================================================== -->
+<section class="section section--border-top" id="architecture">
+<div class="content-wrap">
+<h2 class="section__title">How it works</h2>
+<p class="section__subtitle">Five stages from raw document to queryable graph.</p>
+<div class="pipeline">
+<div class="pipeline__step">
+<div class="pipeline__number">1</div>
+<div class="pipeline__name">Connect</div>
+<div class="pipeline__desc">
+            Source connectors authenticate and enumerate documents from SharePoint,
+            Confluence, Google Drive, Jira, Salesforce, and others. Incremental sync
+            tracks changes.
+</div>
+</div>
+<div class="pipeline__step">
+<div class="pipeline__number">2</div>
+<div class="pipeline__name">Classify</div>
+<div class="pipeline__desc">
+            Each document is assigned a type — contract, regulation, report, specification.
+            Rule-based or LLM classification. Multi-type documents are segmented.
+</div>
+</div>
+<div class="pipeline__step">
+<div class="pipeline__number">3</div>
+<div class="pipeline__name">Extract</div>
+<div class="pipeline__desc">
+            Per-type ontologies define what to extract: entities, attributes, relationships.
+            LLM extraction with confidence scoring. YAML-driven, no code changes.
+</div>
+</div>
+<div class="pipeline__step">
+<div class="pipeline__number">4</div>
+<div class="pipeline__name">Resolve</div>
+<div class="pipeline__desc">
+            Extracted entities are matched to existing graph nodes. Exact ID match,
+            fuzzy name match, LLM disambiguation. One company = one node across all sources.
+</div>
+</div>
+<div class="pipeline__step">
+<div class="pipeline__number">5</div>
+<div class="pipeline__name">Query</div>
+<div class="pipeline__desc">
+            BM25, vector, and graph traversal fire in parallel. Reciprocal Rank Fusion
+            merges results. LLM synthesizes a cited answer from combined context.
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =====================================================================
+       TECHNICAL FOUNDATION
+       ====================================================================== -->
+<section class="section section--border-top">
+<div class="content-wrap">
+<h2 class="section__title">Technical foundation</h2>
+<p class="section__subtitle">Stable, auditable, on-premises from day one.</p>
+<div class="tech-grid">
+<div class="tech-grid__item">
+<div class="tech-grid__label">Graph Storage</div>
+<div class="tech-grid__value">Neo4j 5.x</div>
+<div class="tech-grid__note">Cypher queries, APOC, native vector + fulltext indexes</div>
+</div>
+<div class="tech-grid__item">
+<div class="tech-grid__label">Relational + Vector</div>
+<div class="tech-grid__value">PostgreSQL 16</div>
+<div class="tech-grid__note">pgvector for embeddings, tsvector for BM25, application state</div>
+</div>
+<div class="tech-grid__item">
+<div class="tech-grid__label">API Layer</div>
+<div class="tech-grid__value">Python / FastAPI</div>
+<div class="tech-grid__note">Async, type-safe, auto-generated OpenAPI spec</div>
+</div>
+<div class="tech-grid__item">
+<div class="tech-grid__label">LLM Extraction</div>
+<div class="tech-grid__value">Claude API</div>
+<div class="tech-grid__note">Ontology-guided extraction, Cypher generation, answer synthesis</div>
+</div>
+<div class="tech-grid__item">
+<div class="tech-grid__label">Access Control</div>
+<div class="tech-grid__value">Corpus + Tier</div>
+<div class="tech-grid__note">Two-dimensional model. No source permission replication.</div>
+</div>
+<div class="tech-grid__item">
+<div class="tech-grid__label">Deployment</div>
+<div class="tech-grid__value">Docker Compose</div>
+<div class="tech-grid__note">Single command. On-premises or customer cloud tenant.</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =====================================================================
+       TARGET INDUSTRIES
+       ====================================================================== -->
+<section class="section section--border-top">
+<div class="content-wrap">
+<h2 class="section__title">Built for regulated industries</h2>
+<p class="section__subtitle section__subtitle--wide">
+        Where document sprawl creates compliance risk, and the ability to traverse
+        relationships across document types creates the most value.
+</p>
+<div class="industry-cards">
+<div class="industry-card">
+<div class="industry-card__title">Financial Services &amp; Insurance</div>
+<div class="industry-card__examples">
+            Solvency II compliance, DORA readiness, SFDR reporting, cross-entity risk
+            mapping, regulatory change tracking
+</div>
+</div>
+<div class="industry-card">
+<div class="industry-card__title">Construction &amp; Engineering</div>
+<div class="industry-card__examples">
+            Public procurement analysis, subcontractor due diligence, regulatory obligation
+            mapping, project documentation traceability
+</div>
+</div>
+<div class="industry-card">
+<div class="industry-card__title">Legal &amp; Professional Services</div>
+<div class="industry-card__examples">
+            Cross-matter entity search, regulatory gap analysis, contract clause comparison,
+            M&amp;A document room intelligence
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- =====================================================================
+       CTA
+       ====================================================================== -->
+<section class="section section--rule-top" id="demo">
+<div class="content-wrap">
+<div class="cta">
+<h2 class="cta__title">See it on your data</h2>
+<p class="cta__description">
+          We'll build a proof of concept on your documents — public data or your own, with full
+          access controls — and show you the cross-document relationships you've been missing.
+</p>
+<a href="#contact" class="btn btn--primary">Request a Demo</a>
+</div>
+</div>
+</section>
+<!-- =====================================================================
+       FOOTER
+       ====================================================================== -->
+<footer class="site-footer">
+<div>
+<span class="site-footer__brand">Trellis</span>
+<span class="site-footer__byline">by Varpu Works</span>
+</div>
+<div class="site-footer__meta">
+      On-premises · YAML-driven ontologies · Neo4j + PostgreSQL · Claude API
+</div>
+</footer>
+</body>
+</html>
